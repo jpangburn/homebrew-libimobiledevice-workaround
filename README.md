@@ -1,5 +1,5 @@
 # libimobiledevice-workaround
-As of Nov 15, 2021, libimobiledevice has a libimobiledevice-glue project with no homebrew formula, which breaks building HEAD versions of their projects.  This repository is a Homebrew tap to workaround this problem temporarily.
+As of Nov 15, 2021, libimobiledevice has a libimobiledevice-glue project with no homebrew formula, which breaks building HEAD versions of their projects (and on projects that depend on their projects like ios-webkit-debug-proxy).  This repository is a Homebrew tap to workaround this problem temporarily.
 
 ## The Problem
 Before sometime recently, you could do stuff like:
@@ -19,12 +19,13 @@ All you have to do is the following:
 ```
 brew tap jpangburn/libimobiledevice-workaround
 ```
-This gives your Homebrew installation access to this tap (repository).  Then use my `*-head` versions of those projects after uninstalling any original versions you have have around e.g. `brew uninstall libusbmuxd`, `brew uninstall libimobiledevice`, etc.
+This gives your Homebrew installation access to this tap (that command actually is a shortcut to tap this repository `jpangburn/homebrew-libimobiledevice-workaround`).  Then use my `*-head` versions of those projects after uninstalling any original versions you have have around e.g. `brew uninstall libusbmuxd`, `brew uninstall libimobiledevice`, etc.
 
 ```
 brew install --HEAD libusbmuxd-head
 brew install --HEAD libimobiledevice-head
 brew install --HEAD ideviceinstaller-head
+brew install --HEAD ios-webkit-debug-proxy-head
 ```
 
 These are HEAD only formulae, so they'll tell you if you forget `--HEAD`.
@@ -33,9 +34,10 @@ These are HEAD only formulae, so they'll tell you if you forget `--HEAD`.
 Whenever the libimobiledevice maintainers are able to fix their formulae, you should get rid of mine and use theirs.  To do that:
 
 ```
+brew uninstall ios-webkit-debug-proxy-head
 brew uninstall libusbmuxd-head
 brew uninstall libimobiledevice-head
 brew uninstall ideviceinstaller-head
 brew uninstall libimobiledevice-glue-head
-brew untap ?
+brew untap jpangburn/libimobiledevice-workaround
 ```
